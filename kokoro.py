@@ -50,7 +50,8 @@ def benchmark_kokoro(text_prompt, output_file="kokoro_output.mp3"):
 TEST_TEXT = "This is a benchmark test using Kokoro eighty two million model in an elaborated pipeline."
 times, out_file = benchmark_kokoro(TEST_TEXT)
 
-print("✅ Kokoro-82M completed.")
+print(" Kokoro-82M completed.")
 for k, v in times.items():
     print(f"{k:15s}: {v:.3f} sec")
 print(f"Saved output to: {out_file}")
+
