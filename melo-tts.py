@@ -46,7 +46,8 @@ def benchmark_melo(text_prompt, output_file="melo_output.mp3"):
 TEST_TEXT = "This is a benchmark test using MeloTTS in a detailed modular pipeline."
 times, out_file = benchmark_melo(TEST_TEXT)
 
-print("✅ MeloTTS completed.")
+print(" MeloTTS completed.")
 for k, v in times.items():
     print(f"{k:15s}: {v:.3f} sec")
 print(f"Saved output to: {out_file}")
+
