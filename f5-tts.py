@@ -70,7 +70,8 @@ TEST_TEXT = "This is a benchmark test using F5 TTS with my cloned voice in a lon
 
 times, out_file = benchmark_f5(REFERENCE_AUDIO, TEST_TEXT)
 
-print("✅ F5 TTS completed.")
+print("F5 TTS completed.")
 for k, v in times.items():
     print(f"{k:15s}: {v:.3f} sec")
 print(f"Saved output to: {out_file}")
+
