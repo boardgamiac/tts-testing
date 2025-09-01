@@ -1,0 +1,57 @@
+!pip install -q requests
+
+import requests
+import time
+import json
+
+API_KEY = "YOUR_SMALLEST_AI_KEY"   # Replace with your Lightning/Smallest.ai API key
+url = "https://api.smallest.ai/tts"
+
+def prepare_text(text):
+    return text.strip()
+
+def run_inference(text):
+    response = requests.post(
+        url,
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        json={"text": text}
+    )
+    return response
+
+def save_audio(response, output_file):
+    if response.status_code == 200:
+        with open(output_file, "wb") as f:
+            f.write(response.content)
+        return output_file, None
+    else:
+        return None, response.text
+
+def benchmark_lightning(text_prompt, output_file="lightning_output.mp3"):
+    times = {}
+    start_total = time.time()
+
+    start = time.time()
+    text = prepare_text(text_prompt)
+    times["prepare_text"] = time.time() - start
+
+    start = time.time()
+    response = run_inference(text)
+    times["inference"] = time.time() - start
+
+    start = time.time()
+    out_file, error = save_audio(response, output_file)
+    times["postprocess"] = time.time() - start
+
+    times["total"] = time.time() - start_total
+    return times, out_file, error
+
+TEST_TEXT = "This is a benchmark test using Lightning TTS API in a detailed modular pipeline."
+times, out_file, error = benchmark_lightning(TEST_TEXT)
+
+if error is None:
+    print(" Lightning TTS completed.")
+    for k, v in times.items():
+        print(f"{k:15s}: {v:.3f} sec")
+    print(f"Saved output to: {out_file}")
+else:
+    print(" Lightning API Error:", error)
