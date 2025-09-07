@@ -1,0 +1,22 @@
+1) Colab runtime settings
+Open Google Colab → Runtime → Change runtime type → select GPU.
+Recommended GPUs: A100 / T4 / V100 (A100 best). If using Colab Pro, choose A100 if available.
+ Enable high-RAM runtime if you have very large files.
+
+2) Get Hugging Face token
+Go to https://huggingface.co
+ → Settings → Access Tokens → create a token (write/read).
+In Colab, set it one of these ways:
+1)Option A (recommended, interactive):
+!pip install -q huggingface_hub
+from huggingface_hub import login
+login()   # paste token into prompt
+
+2)Option B (env var):
+import os
+os.environ["HF_TOKEN"] = "hf_xxxYOURTOKENxxx"   # avoid leaving this in shared notebooks
+
+3) Upload your reference audio & test text
+Drop your voice sample into Colab (name it reference.mp3 or reference.wav) or run:
+from google.colab import files
+uploaded = files.upload()   # choose reference.mp3
